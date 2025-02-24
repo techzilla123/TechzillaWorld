@@ -71,8 +71,9 @@ const ContactForm: React.FC = () => {
   const selectedRoleData = rolesData[selectedInterest];
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState(""); // Use `setError` in `handleSubmit`
+
+  
 
   const handleInterestClick = (id: string) => {
     console.log("Selected Interest: ", id);
@@ -117,12 +118,14 @@ const ContactForm: React.FC = () => {
        setTimeout(() => {
         router.push("/success");
       }, 1000);
-    } else {
-        setError("Failed to send message. Please try again.");
-      }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
-    } finally {
+    }  else {
+      setError("Failed to send message. Please try again."); // Now `setError` is used
+    }
+  } catch (err) {
+    console.error(err); // Logs error to the console for debugging
+    setError("An error occurred. Please try again.");
+  }
+   finally {
       setLoading(false);
     }
   };
@@ -250,6 +253,7 @@ const ContactForm: React.FC = () => {
               />
             </div>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
         </div>
         {/* Animated Send Button */}
         <motion.button
